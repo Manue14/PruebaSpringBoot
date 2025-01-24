@@ -35,3 +35,8 @@
 .star_icon:hover {
     fill: gold;
 }
+
+.like_button {
+    background-color: transparent;
+    border: none;
+}

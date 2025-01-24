@@ -2,6 +2,7 @@ package demoapp;
 
 import demoapp.model.entities.Customer;
 import demoapp.model.entities.Movie;
+import demoapp.model.entities.Quote;
 import demoapp.model.repository.CustomerRepository;
 import demoapp.model.repository.MovieRepository;
 import org.slf4j.Logger;
@@ -9,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class Application {
@@ -19,7 +22,12 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(CustomerRepository repository, MovieRepository movieRepository) {
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
+
+    @Bean
+    public CommandLineRunner demo(CustomerRepository repository, MovieRepository movieRepository, RestTemplate restTemplate) {
         return (args) -> {
             movieRepository.save(new Movie("Arrival"));
             movieRepository.save(new Movie("The End of Evangelion"));
@@ -54,6 +62,10 @@ public class Application {
                 log.info(bauer.toString());
             });
             log.info("");
+
+            Quote quote = restTemplate.getForObject(
+                    "https://api.chucknorris.io/jokes/random", Quote.class);
+            log.info(quote.toString());
         };
     }
 }

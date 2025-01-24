@@ -1,6 +1,7 @@
 package demoapp.controller;
 
 import demoapp.model.entities.Customer;
+import demoapp.model.entities.Movie;
 import demoapp.service.CustomerService;
 import demoapp.service.MovieService;
 import jakarta.validation.Valid;
@@ -58,5 +59,21 @@ public class CustomerController {
     public String delete(@PathVariable long id) {
         customerService.deleteById(id);
         return "redirect:/list";
+    }
+
+    @GetMapping("/listMovies")
+    public String listMovies(Model model) {
+        model.addAttribute("arrival", movieService.findById(1L));
+        model.addAttribute("eoe", movieService.findById(2L));
+        model.addAttribute("lebowski", movieService.findById(3L));
+        return "movieList";
+    }
+
+    @PostMapping("/like/{id}")
+    public String like(@PathVariable long id) {
+        Movie movie = movieService.findById(id);
+        movie.setCounter(movie.getCounter() + 1);
+        movieService.save(movie);
+        return "redirect:/listMovies";
     }
 }
