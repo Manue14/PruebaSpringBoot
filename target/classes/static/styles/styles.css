@@ -1,0 +1,37 @@
+.movie_container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.movie_card {
+    background-color: antiquewhite;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 20px;
+    padding-left: 15px;
+}
+
+.movie_card img {
+    border-radius: 10px;
+    height: 400px;
+    width: 350px;
+}
+
+.like_div {
+    display: flex;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.star_icon {
+    height: 50px;
+    stroke: gold;
+    width: 50px;
+}
+
+.star_icon:hover {
+    fill: gold;
+}
